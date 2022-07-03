@@ -2,6 +2,7 @@ from easyclasses import EasyClass, LightEasyClass
 import time
 from dataclasses import dataclass
 from typing import Callable, NamedTuple
+import attrs
 
 
 def count(func: Callable[[], None]):
@@ -62,6 +63,21 @@ def named_tuple():
     for _ in range(30000):
 
         class MyClass(NamedTuple):
+            a: str
+            b: str
+            c: str
+            d: str = "d"
+
+        MyClass("a", "b", "c", d="test")
+        assert MyClass("a", "b", "c", d="test") == MyClass("a", "b", "c", d="test")
+
+
+@count
+def attrs_dataclass():
+    for _ in range(30000):
+
+        @attrs.define
+        class MyClass:
             a: str
             b: str
             c: str

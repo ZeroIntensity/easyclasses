@@ -6,6 +6,7 @@ from typing import (
     TypeVar,
     Optional,
     List,
+    get_type_hints,
 )
 import copy
 
@@ -100,7 +101,7 @@ class LightEasyClass:
             )
 
     def __init_subclass__(cls) -> None:
-        cls._params = [i for i in dir(cls) if not i.startswith("_")]
+        cls._params = [i for i in get_type_hints(cls) if not i.startswith("_")]
         cls._defaults = {}
 
         kw: bool = False
@@ -145,14 +146,6 @@ class EasyClass(LightEasyClass):
             cls.__eq__ = _base_eq  # type: ignore
 
         cls._immutable = immutable
-
-    def __repr__(self) -> str:
-        attrs = [f"{i}={repr(getattr(self, i))}" for i in self._params]
-        return f"{self.__class__.__name__}({', '.join(attrs)})"
-
-    @property
-    def __dict__(self):
-        return {i: getattr(self, i) for i in self._params}
 
     def __setattr__(self, name: str, value: Any) -> None:
         if self._immutable and self._ready:

@@ -28,9 +28,9 @@ py -3 -m pip install -U easyclasses
 
 ### Performance
 
-Based on `benchmarks.py`, easyclasses is over 10x faster than the built-in dataclasses module.
+Based on `benchmarks.py`, easyclasses is over 6x faster than the built-in dataclasses module.
 
-On top of that, it's also about 2x faster than `NamedTuple`.
+On top of that, it's also outperforms `NamedTuple`.
 
 ### Usage
 
@@ -54,7 +54,6 @@ from easyclasses import EasyClass
 class MyEasyClass(EasyClass):
     a: str
     b: str = "h"
-    c = "c" # you don't even need the type hint!
 ```
 
 You can pass subclass arguments to enable or disable certain features:
